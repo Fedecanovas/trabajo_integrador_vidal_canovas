@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Resultados de búsqueda</title>
+    <link rel="stylesheet" href="/stylesheets/bootstrap-grid.min.css">
+    <link rel="stylesheet" href="/stylesheets/app.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+</head>
+<body>
+
+    <%- include("partials/header") %>
+
+    <div class="container products-wrapper">
+        <h1>Resultados de búsqueda</h1>
+
+        <% if (search) { %>
+            <p>Buscaste: <strong><%= search %></strong></p>
+        <% } else { %>
+            <p>No escribiste nada en el buscador.</p>
+        <% } %>
+    </div>
+
+    <%- include("partials/footer") %>
+
+</body>
+</html>

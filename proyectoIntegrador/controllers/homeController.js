@@ -1,6 +1,8 @@
+const modulo = require('../db/modulo');
 const controlador = {
     index: (req, res) => {
-       res.render('index');
+        const productos = modulo.productos.lista;
+        res.render('index', { productos });
     }
 };
 

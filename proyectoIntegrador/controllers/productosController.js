@@ -1,17 +1,31 @@
-const controller = {
+const modulo = require('../db/modulo');
+const productosController = {
     index: (req, res) => {
-        res.render('productos'); 
+        const productos = modulo.productos.lista;
+        res.render('productos', { productos });
     },
+
     showID: (req, res) => {
-        let id = req.params.id;
-        
-         res.render('detalleProducto', { id }); 
+        const id = req.params.id;
+        const producto = modulo.productos.lista[id];
+        const comentarios = modulo.comentarios; 
+
+        if (producto === undefined) {
+            res.render('error', {
+                message: "Producto no encontrado",
+                error: {}
+            });
+        } else {
+            res.render('detalleProducto', {
+                producto: producto,
+                comentarios: comentarios
+            });
+        }
     },
+
     form: (req, res) => {
-         res.render('agregarProducto');
+        res.render('agregarProductos');
     }
 };
 
-
-
-module.exports = controller;
+module.exports = productosController;

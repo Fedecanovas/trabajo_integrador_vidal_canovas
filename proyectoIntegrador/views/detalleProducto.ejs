@@ -2,49 +2,48 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Detalle del Producto - Proyecto Integrador</title>
+    <title><%= producto.nombre %> - Proyecto Integrador</title>
+    <link rel="stylesheet" href="/stylesheets/bootstrap-grid.min.css">
+    <link rel="stylesheet" href="/stylesheets/app.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
-    <link rel="stylesheet" href="../public/stylesheets/css/bootstrap-grid.min.css">
-    <link rel="stylesheet" href="../public/stylesheets/css/app.css">
 </head>
 <body>
 
-    <% include partials/header %>
+    <%- include("partials/header") %>
 
-    <!-- Detalle del producto -->
     <div class="container products-wrapper">
         <div class="d-flex align-items-center">
-            <h2 class="products-title"><%= producto?.nombre || "Nombre del producto" %></h2>
+            <h2 class="products-title"><%= producto.nombre %></h2>
             <p class="product-detail-description">
-                <a href="/productos/<%= producto?.id || 1 %>/editar">Editar</a>
+                <a href="#">Editar</a>
             </p>
         </div>
 
         <div class="product-detail">
             <div class="row">
                 <article class="col-12 col-lg-8 product-detail-info">
-                    <img src="../public/stylesheets/images/products/default-image.png" alt="" class="product-detail-img">
+                    <img src="<%= producto.img %>" alt="<%= producto.nombre %>" class="product-detail-img">
                     <p class="product-detail-description">
-                        <%= producto?.descripcion || "Descripción corta del producto. Lorem ipsum dolor sit amet consectetur." %>
+                        <%= producto.descripcion %>
                     </p>
                 </article>
 
                 <div class="col-12 col-lg-4">
                     <section class="comments">
-                        <% for (let i = 0; i < 4; i++) { %>
+                        <% for (let i = 0; i < comentarios.length; i++) { %>
                             <article>
-                                <img src="https://via.placeholder.com/35" alt="">
+                                <img src="<%= comentarios[i].img %>" alt="comentario">
                                 <div class="data">
                                     <p class="user">
-                                        <strong><a href="/perfil">Nombre usuario:</a></strong>
-                                        Comentario ejemplo del usuario. Lorem ipsum dolor sit amet.
+                                        <strong><a href="/perfil"><%= comentarios[i].nombre %></a></strong>
+                                        <%= comentarios[i].coment %>
                                     </p>
                                 </div>
                             </article>
                         <% } %>
                     </section>
 
-                    <form class="form" action="/productos/<%= producto?.id || 1 %>/comentario" method="POST">
+                    <form class="form" action="#" method="POST">
                         <input class="form-input" type="text" name="comentario" placeholder="Agregar comentario" required>
                         <button type="submit" class="buy-now-button">AGREGAR COMENTARIO</button>
                     </form>
@@ -54,7 +53,9 @@
         </div>
     </div>
 
-    <% include partials/footer %>
+    <%- include("partials/footer") %>
 
 </body>
 </html>
+
+

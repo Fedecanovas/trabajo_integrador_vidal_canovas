@@ -1,8 +1,8 @@
-const controller = {
+const busquedaController = {
     resultado: (req, res) => {
-        const query = req.query.search || '';
-         res.render('resultados', { query });
+        let busco = req.query.search;
+        res.render('resultados', { search: busco });
     }
 };
 
-module.exports = controller;
+module.exports = busquedaController;

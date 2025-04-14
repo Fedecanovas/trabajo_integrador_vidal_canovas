@@ -5,3 +5,4 @@ const busquedaController = require('../controllers/busquedaController');
 router.get('/', busquedaController.resultado);
 
 module.exports = router;
+

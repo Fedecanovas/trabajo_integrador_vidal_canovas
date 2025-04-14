@@ -2,30 +2,23 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Mi Perfil - Proyecto Integrador</title>
+    <title>Mi Perfil</title>
+    <link rel="stylesheet" href="/stylesheets/bootstrap-grid.min.css">
+    <link rel="stylesheet" href="/stylesheets/app.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
-    <link rel="stylesheet" href="../public/stylesheets/css/bootstrap-grid.min.css">
-    <link rel="stylesheet" href="../public/stylesheets/css/app.css">
 </head>
 <body>
 
-    <%- include ("partials/header") %>
+    <%- include("partials/header") %>
 
-    <!-- Datos del usuario -->
     <section class="info-usuario container products-wrapper">
         <div class="row">
             <div class="img-container offset-3 col-2">
-                <img src="https://via.placeholder.com/150" alt="foto de perfil" class="foto-perfil">
+                <img src="/images/users/<%= usuario.foto %>" alt="foto de perfil" class="foto-perfil">
             </div>
             <div class="data-container col-6">
-                <div class="d-flex align-items-center">
-                    <h1 class="main-title">Nombre del usuario 
-                        <a href="/perfil/editar">
-                            <i class="fas fa-cog"></i>
-                        </a>
-                    </h1>
-                    <a class="btn mt-3 ml-4" href="#">SEGUIR</a>
-                </div>
+                <h1 class="main-title"><%= usuario.nombre %></h1>
+                <p><%= usuario.email %></p>
                 <ul>
                     <li>8 productos</li>
                     <li>200 seguidores</li>
@@ -35,12 +28,7 @@
         </div>
     </section>
 
-    <!-- Mis productos -->
-    <div class="container products-wrapper">
-        <div class="row">
-            <div class="col-12">
-                <h2 class="products-title">Mis productos</h2>
-            </div>
+    <%- include("partials/footer") %>
 
-            <% for (let i = 0; i < 4; i++) { %>
-            <div class="col-12 col-sm-6
+</body>
+</html>
