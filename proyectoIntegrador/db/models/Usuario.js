@@ -41,3 +41,48 @@ Usuario.hasMany(models.Comentario, {
 };
   return Usuario;
 };
+
+module.exports = function (sequelize, dataTypes) {
+  let alias = "Producto";
+
+  let cols = {
+    id: {
+      autoIncrement: true,
+      primaryKey: true,
+      type: dataTypes.INTEGER
+    },
+    nombre: {
+      type: dataTypes.STRING
+    },
+    precio: {
+      type: dataTypes.DECIMAL
+    },
+    imagen: {
+      type: dataTypes.STRING
+    },
+    usuario_id: {
+      type: dataTypes.INTEGER
+    }
+  };
+
+  let config = {
+    tableName: "productos",
+    timestamps: false
+  };
+
+  const Producto = sequelize.define(alias, cols, config);
+
+  Producto.associate = function (models) {
+    Producto.belongsTo(models.Usuario, {
+      as: "usuario",
+      foreignKey: "usuario_id"
+    });
+
+    Producto.hasMany(models.Comentario, {
+      as: "comentarios",
+      foreignKey: "producto_id"
+    });
+  };
+
+  return Producto;
+};
