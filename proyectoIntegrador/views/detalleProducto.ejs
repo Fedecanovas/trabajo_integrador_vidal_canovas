@@ -12,46 +12,61 @@
     <%- include("partials/header") %>
 
     <div class="container products-wrapper">
-        <div class="d-flex align-items-center">
-            <h2 class="products-title"><%= producto.nombre %></h2>
-            <p class="product-detail-description">
-                <a href="#">Editar</a>
-            </p>
-        </div>
-
-        <div class="product-detail">
-            <div class="row">
-                <article class="col-12 col-lg-8 product-detail-info">
-                    <img src="<%= producto.img %>" alt="<%= producto.nombre %>" class="product-detail-img">
-                    <p class="product-detail-description">
-                        <%= producto.descripcion %>
-                    </p>
-                </article>
-
-                <div class="col-12 col-lg-4">
-                    <section class="comments">
-                        <% for (let i = 0; i < comentarios.length; i++) { %>
-                            <article>
-                                <img src="<%= comentarios[i].img %>" alt="comentario">
-                                <div class="data">
-                                    <p class="user">
-                                        <strong><a href="/perfil"><%= comentarios[i].nombre %></a></strong>
-                                        <%= comentarios[i].coment %>
-                                    </p>
-                                </div>
-                            </article>
-                        <% } %>
-                    </section>
-
-                    <form class="form" action="#" method="POST">
-                        <input class="form-input" type="text" name="comentario" placeholder="Agregar comentario" required>
-                        <button type="submit" class="buy-now-button">AGREGAR COMENTARIO</button>
-                    </form>
-                    <hr>
-                </div>
-            </div>
-        </div>
+    <div class="d-flex align-items-center">
+        <h2 class="products-title"><%= producto.nombre %></h2>
+        <p class="product-detail-description">
+        <a href="#">Editar</a>
+    </p>
     </div>
+
+  <div class="product-detail">
+    <div class="row">
+      <article class="col-12 col-lg-8 product-detail-info">
+        <img src="/img/<%= producto.imagen %>" alt="<%= producto.nombre %>" class="product-detail-img">
+        <p class="product-detail-description"><%= producto.descripcion %></p>
+      </article>
+
+    
+      <div class="col-12 col-lg-4">
+        <section class="comments">
+          <h3>Comentarios</h3>
+
+          <% if (producto.comentarios.length > 0) { %>
+            <% producto.comentarios.forEach(comentario => { %>
+              <article class="comentario-item">           
+                <div class="data">
+                  <p class="user">
+                    <strong>
+                      <a href="/perfil/<%= comentario.usuario.id %>">
+                        <%= comentario.usuario.usuario %>
+                      </a>
+                    </strong>
+                    <%= comentario.contenido %>
+                  </p>
+                </div>
+              </article>
+            <% }) %>
+          <% } else { %>
+            <p>No hay comentarios aún.</p>
+          <% } %>
+        </section>
+
+        <% if (locals.user) { %>
+          <form class="form" action="/comentarios/agregar" method="POST">
+            <input type="hidden" name="producto_id" value="<%= producto.id %>">
+            <input class="form-input" type="text" name="contenido" placeholder="Agregar comentario" required>
+            <button type="submit" class="buy-now-button">AGREGAR COMENTARIO</button>
+          </form>
+        <% } else { %>
+          <p><a href="/login">Iniciá sesión</a> para comentar.</p>
+        <% } %>
+
+        <hr>
+      </div>
+    </div>
+  </div>
+</div>
+
 
     <%- include("partials/footer") %>
 

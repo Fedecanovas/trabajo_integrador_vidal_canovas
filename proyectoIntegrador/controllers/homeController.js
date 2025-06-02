@@ -1,11 +1,17 @@
-const modulo = require('../db/modulo');
-const controlador = {
-    index: (req, res) => {
-        const productos = modulo.productos.lista;
-        res.render('index', { productos });
-    }
+const db = require('../db/models');
+
+const controller = {
+  index: (req, res) => {
+    db.Producto.findAll()
+      .then(productos => {
+        res.render('index', {
+          productos: productos
+        });
+      })
+      .catch(error => {
+        res.send("Error al cargar productos");
+      });
+  }
 };
 
-module.exports = controlador;
-
-
+module.exports = controller;

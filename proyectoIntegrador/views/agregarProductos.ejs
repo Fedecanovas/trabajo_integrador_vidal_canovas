@@ -12,23 +12,25 @@
     <%- include("partials/header") %>
 
     <main class="form-main">
-        <section class="form-container">
-            <h1 class="form-title">Agregar nuevo producto</h1>
+  <h1>Cargar un nuevo producto</h1>
 
-            <form class="form" action="/productos/agregar" method="GET">
-                <label for="img">Imagen del producto:</label>
-                <input type="file" name="img" id="img">
+  <form action="/productos/crear" method="POST">
+    <label>Nombre:</label>
+    <input type="text" name="nombre" required>
 
-                <label for="nombre">Nombre del producto:</label>
-                <input type="text" name="nombre" id="nombre" required>
+    <label>Descripción:</label>
+    <textarea name="descripcion" required></textarea>
 
-                <label for="descripcion">Descripción:</label>
-                <textarea name="descripcion" id="descripcion" rows="4" required></textarea>
+    <label>Precio:</label>
+    <input type="number" name="precio" step="0.01" required>
 
-                <button type="submit" class="buy-now-button">CARGAR PRODUCTO</button>
-            </form>
-        </section>
-    </main>
+    <label>Imagen:</label>
+    <input type="text" name="imagen" required>
+
+    <button type="submit">Guardar</button>
+  </form>
+</main>
+
 
     <%- include("partials/footer") %>
 

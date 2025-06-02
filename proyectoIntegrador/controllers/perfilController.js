@@ -1,10 +1,27 @@
-const modulo = require('../db/modulo');
+const db = require('../db/models');
 
-const perfilController = {
-    mostrar: (req, res) => {
-        const usuario = modulo.usuario;
-        res.render('perfil', { usuario });
+const controller = {
+  mostrar: (req, res) => {
+    if (req.session.usuarioLogueado == undefined) {
+      return res.redirect('/login');
     }
+
+    const idUsuario = req.session.usuarioLogueado.id;
+
+    db.Usuario.findByPk(idUsuario, {
+      include: ['productos'] 
+    })
+    .then(usuario => {
+      res.render('perfil', {
+        usuario: usuario,
+        productos: usuario.productos
+      });
+    })
+    .catch(error => {
+      res.send("Error al cargar el perfil");
+    });
+  }
 };
 
-module.exports = perfilController;
+module.exports = controller;
+

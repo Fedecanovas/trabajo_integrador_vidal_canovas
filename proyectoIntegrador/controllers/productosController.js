@@ -1,31 +1,55 @@
-const modulo = require('../db/modulo');
-const productosController = {
-    index: (req, res) => {
-        const productos = modulo.productos.lista;
-        res.render('productos', { productos });
-    },
+const db = require('../db/models');
 
-    showID: (req, res) => {
-        const id = req.params.id;
-        const producto = modulo.productos.lista[id];
-        const comentarios = modulo.comentarios; 
-
-        if (producto === undefined) {
-            res.render('error', {
-                message: "Producto no encontrado",
-                error: {}
-            });
-        } else {
-            res.render('detalleProducto', {
-                producto: producto,
-                comentarios: comentarios
-            });
-        }
-    },
-
-    form: (req, res) => {
-        res.render('agregarProductos');
+const controller = {
+  form: (req, res) => {
+    if (!req.session.usuarioLogueado) {
+      return res.redirect('/login');
     }
+    return res.render('agregarProducto');
+  },
+
+  guardar: (req, res) => {
+    if (!req.session.usuarioLogueado) {
+      return res.redirect('/login');
+    }
+    const { nombre, descripcion, precio, imagen } = req.body;
+    db.Producto.create({
+      nombre,
+      descripcion,
+      precio,
+      imagen,
+      usuario_id: req.session.usuarioLogueado.id
+    })
+    .then(() => {
+      return res.redirect('/');
+    })
+    .catch(error => {
+      return res.send("Error al guardar el producto");
+    });
+  },
+
+  detalle: (req, res) => {
+  db.Producto.findByPk(req.params.id, {
+    include: [
+      {
+        association: "comentarios",
+        include: ["usuario"] 
+      }
+    ]
+  })
+  .then(producto => {
+    if (!producto) return res.send("Producto no encontrado");
+
+    res.render('detalleProducto', {
+      producto: producto
+    });
+  })
+  .catch(error => {
+    res.send("Error al cargar el producto");
+  });
+}
+
 };
 
-module.exports = productosController;
+module.exports = controller;
+

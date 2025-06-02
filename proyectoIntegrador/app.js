@@ -12,9 +12,17 @@ const registerRouter = require('./routes/register');
 const perfilRouter = require('./routes/perfil');
 const productosRouter = require('./routes/productos');
 const busquedaRouter = require('./routes/busqueda');
-var app = express();
+const logoutRouter = require('./routes/logout');
+const comentariosRouter = require('./routes/comentarios');
 
-// view engine setup
+
+var app = express();
+const session = require('express-session');
+const cookieParser = require('cookie-parser');
+
+
+
+
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
@@ -31,19 +39,23 @@ app.use('/perfil', perfilRouter);
 app.use('/productos', productosRouter);
 app.use('/resultados', busquedaRouter);
 app.use('/users', usersRouter);
+app.use('/logout', logoutRouter);
+app.use('/comentarios', comentariosRouter);
 
-// catch 404 and forward to error handler
+app.use(session({
+  secret: 'clave',
+  resave: false,
+  saveUninitialized: true
+}));
+
+
 app.use(function(req, res, next) {
   next(createError(404));
 });
 
-// error handler
 app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
   res.status(err.status || 500);
   res.render('error');
 });

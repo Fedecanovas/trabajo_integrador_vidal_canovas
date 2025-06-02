@@ -16,35 +16,35 @@
     </div>
 
     <div class="container products-wrapper">
-        <div class="row">
-            <div class="col-12">
-                <h2 class="products-title">Productos</h2>
-            </div>
-
-            <% if (productos && productos.length > 0) { %>
-                <% for (let i = 0; i < productos.length; i++) { %>
-                    <div class="col-12 col-sm-6 col-lg-3">
-                        <section class="product-box">
-                            <a href="/productos/<%= i %>">
-                                <figure class="product-box_image">
-                                    <img src="<%= productos[i].img %>" alt="<%= productos[i].nombre %>">
-                                </figure>
-                                <article class="product-box_data">
-                                    <h2><%= productos[i].nombre %></h2>
-                                    <p><%= productos[i].descripcion %></p>
-                                    <p>Comentarios: 12</p> 
-                                </article>
-                            </a>
-                        </section>
-                    </div>
-                <% } %>
-            <% } else { %>
-                <div class="col-12">
-                    <p class="noproducts">No hay productos disponibles</p>
-                </div>
-            <% } %>
-        </div>
+  <div class="row">
+    <div class="col-12">
+      <h2 class="products-title">Productos</h2>
     </div>
+
+    <% if (productos && productos.length > 0) { %>
+      <% for (let i = 0; i < productos.length; i++) { %>
+        <div class="col-12 col-sm-6 col-lg-3">
+          <section class="product-box">
+            <a href="/productos/<%= productos[i].id %>">
+              <figure class="product-box_image">
+                <img src="/img/<%= productos[i].imagen %>" alt="<%= productos[i].nombre %>">
+              </figure>
+              <article class="product-box_data">
+                <h2><%= productos[i].nombre %></h2>
+                <p><%= productos[i].descripcion %></p>
+                <p>Comentarios: 12</p> <!-- Esto se reemplazará con count real en punto 9 -->
+              </article>
+            </a>
+          </section>
+        </div>
+      <% } %>
+    <% } else { %>
+      <div class="col-12">
+        <p class="noproducts">No hay productos disponibles</p>
+      </div>
+    <% } %>
+  </div>
+</div>
 
     <%- include("partials/footer") %>
 
